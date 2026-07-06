@@ -1,32 +1,40 @@
 # CodeBuild buildspec for the toy Playwright suite.
-# TEST_ENV is injected by the CodeBuild project (dev or qa).
-# Mirrors the real pipeline: install, run, push JUnit + Allure-ready output to S3.
+# Runs on the official Microsoft Playwright image (browsers pre-baked).
+# TEST_ENV selects dev/qa; set per CodeBuild project (this file defaults to dev).
 version: 0.2
 
 env:
   variables:
-    TEST_ENV: "dev"   # overridden per CodeBuild project (codebuild-qa sets qa)
+    TEST_ENV: "dev"
+    PLAYWRIGHT_BROWSERS_PATH: "/ms-playwright"
+    CI: "true"
 
 phases:
   install:
     runtime-versions:
       nodejs: 20
     commands:
-      - echo "Installing dependencies for TEST_ENV=$TEST_ENV"
+      - echo "Installing project dependencies for TEST_ENV=$TEST_ENV"
       - npm ci
-      - npx playwright install --with-deps chromium
+      # No 'playwright install' needed: browsers are baked into the image.
 
   build:
     commands:
       - echo "Running Playwright suite against $TEST_ENV"
-      - npx playwright test || true   # don't fail build on test failure; we analyze results
+      - npx playwright test || true
 
   post_build:
     commands:
-      - echo "Build complete. Results in test-results/ and playwright-report/"
+      - echo "Build complete."
+
+reports:
+  playwright-junit:
+    files:
+      - "test-results/junit/results.xml"
+    file-format: "JUNITXML"
 
 artifacts:
   files:
     - "test-results/**/*"
     - "playwright-report/**/*"
-  name: "playwright-results-$TEST_ENV-$CODEBUILD_BUILD_NUMBER"
+  name: "playwright-results-$TEST_ENV"

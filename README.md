@@ -18,7 +18,6 @@ built as the learning ground for an AWS Bedrock agentic QA pipeline.
 
 - TypeScript, NodeNext module resolution
 - Closure-based (functional) domains and components — no classes
-- `mergeTests` in each `app.fixture.ts` as the single test import point
 - ESLint flat config bans `console` and direct `@playwright/test` imports
 - Pino logging throughout
 - Project-level config in `playwright.config.ts` (storageState-ready)
