@@ -26,6 +26,7 @@ phases:
   post_build:
     commands:
       - echo "Build complete."
+      - aws s3 sync playwright-report/ s3://playwright-reports-dev-2026/latest/ --delete
 
 reports:
   playwright-junit:
