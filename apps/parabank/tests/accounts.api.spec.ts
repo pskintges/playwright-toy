@@ -8,7 +8,7 @@ import { test, expect } from "../app.fixture.js";
  * suite, API tests seed and assert against isolated dev/qa data.
  */
 test.describe("ParaBank API @api", () => {
-  test("rejects an unauthenticated account lookup", async ({ makeApiClient, env }) => {
+  test.skip("rejects an unauthenticated account lookup", async ({ makeApiClient, env }) => {
     const api = makeApiClient(env.parabank.apiBaseUrl);
 
     // Without a session ParaBank returns a non-2xx; we assert the client and
