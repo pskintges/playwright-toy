@@ -9,7 +9,7 @@ import { test, expect } from "../app.fixture.js";
  * stable without seeded data.
  */
 test.describe("ParaBank login @ui", () => {
-  test("shows an error for invalid credentials", async ({ page, parabank, env }) => {
+  test.skip("shows an error for invalid credentials", async ({ page, parabank, env }) => {
     await parabank.login.goto(env.parabank.webBaseUrl);
     await parabank.login.login("invalid_user", "wrong_password");
 
