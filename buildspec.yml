@@ -14,8 +14,7 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - DEBIAN_FRONTEND=noninteractive apt-get update -y
-      - DEBIAN_FRONTEND=noninteractive apt-get install -y awscli
+      - pip install awscli
       - echo "Installing project dependencies for TEST_ENV=$TEST_ENV"
       - npm ci
       # No 'playwright install' needed: browsers are baked into the image.
