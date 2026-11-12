@@ -37,4 +37,4 @@ artifacts:
   files:
     - "test-results/**/*"
     - "playwright-report/**/*"
-  name: "playwright-results-$TEST_ENV"
+  name: "playwright-results-$TEST_ENV-$CODEBUILD_BUILD_NUMBER"
